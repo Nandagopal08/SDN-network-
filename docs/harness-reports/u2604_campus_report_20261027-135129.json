@@ -1,0 +1,446 @@
+{
+  "environment": {
+    "timestamp": "2026-10-27T13:51:29",
+    "kernel": "Linux 6.10.14-linuxkit aarch64",
+    "os": "Ubuntu 26.04.1 LTS",
+    "mininet": "2.3.0",
+    "ovs": "ovs-vsctl (Open vSwitch) 3.7.1",
+    "datapath": "user"
+  },
+  "summary": {
+    "passed": 43,
+    "total": 43
+  },
+  "results": [
+    {
+      "test_id": "CA-P01",
+      "source": "controller",
+      "destination": "s1",
+      "protocol": "OF1.3",
+      "expected": "Installed",
+      "actual": "Installed",
+      "passed": true,
+      "evidence": "46 campus rules, 4 deny rules (expect 4), 3 table-miss drops (expect 3), 0 FLOOD/NORMAL rules (expect 0)"
+    },
+    {
+      "test_id": "CA-P02",
+      "source": "controller",
+      "destination": "s2",
+      "protocol": "OF1.3",
+      "expected": "Installed",
+      "actual": "Installed",
+      "passed": true,
+      "evidence": "46 campus rules, 4 deny rules (expect 4), 3 table-miss drops (expect 3), 0 FLOOD/NORMAL rules (expect 0)"
+    },
+    {
+      "test_id": "CA-P03",
+      "source": "controller",
+      "destination": "s3",
+      "protocol": "OF1.3",
+      "expected": "Installed",
+      "actual": "Installed",
+      "passed": true,
+      "evidence": "47 campus rules, 4 deny rules (expect 4), 3 table-miss drops (expect 3), 0 FLOOD/NORMAL rules (expect 0)"
+    },
+    {
+      "test_id": "CA-01",
+      "source": "h1 (student)",
+      "destination": "h5 Academic server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.5: 3/3 received. 0.654 ms | --- 10.0.0.5 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 409ms | rtt min/avg/max/mdev = 0.561/1.376/2.915/1.088 ms"
+    },
+    {
+      "test_id": "CA-02",
+      "source": "h1 (student)",
+      "destination": "h5 Academic server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.5 8000 --timeout 2 -> RESULT=OK ACADEMIC TCP OK | server h5 log: received TCP 10.0.0.1:41650"
+    },
+    {
+      "test_id": "CA-03",
+      "source": "h1 (student)",
+      "destination": "h5 Academic server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.5 9000 --timeout 2 -> RESULT=OK ACADEMIC UDP OK | server h5 log: received UDP 10.0.0.1:42966"
+    },
+    {
+      "test_id": "CA-04",
+      "source": "h1 (student)",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 0/3 received. PING 10.0.0.6 (10.0.0.6) 56(84) bytes of data. | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 0 received, 100% packet loss, time 411ms"
+    },
+    {
+      "test_id": "CA-05",
+      "source": "h1 (student)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=ERROR OSError: [Errno 113] No route to host | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-06",
+      "source": "h1 (student)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=TIMEOUT no UDP reply from 10.0.0.6:9000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-07",
+      "source": "h2 (student)",
+      "destination": "h5 Academic server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.5: 3/3 received. 0.733 ms | --- 10.0.0.5 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 414ms | rtt min/avg/max/mdev = 0.733/1.443/2.805/0.963 ms"
+    },
+    {
+      "test_id": "CA-08",
+      "source": "h2 (student)",
+      "destination": "h5 Academic server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h2$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.5 8000 --timeout 2 -> RESULT=OK ACADEMIC TCP OK | server h5 log: received TCP 10.0.0.2:48856"
+    },
+    {
+      "test_id": "CA-09",
+      "source": "h2 (student)",
+      "destination": "h5 Academic server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h2$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.5 9000 --timeout 2 -> RESULT=OK ACADEMIC UDP OK | server h5 log: received UDP 10.0.0.2:40300"
+    },
+    {
+      "test_id": "CA-10",
+      "source": "h2 (student)",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 0/3 received. PING 10.0.0.6 (10.0.0.6) 56(84) bytes of data. | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 0 received, 100% packet loss, time 416ms"
+    },
+    {
+      "test_id": "CA-11",
+      "source": "h2 (student)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h2$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=ERROR OSError: [Errno 113] No route to host | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-12",
+      "source": "h2 (student)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h2$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=TIMEOUT no UDP reply from 10.0.0.6:9000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-13",
+      "source": "h3 (faculty)",
+      "destination": "h5 Academic server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.5: 3/3 received. 0.852 ms | --- 10.0.0.5 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 411ms | rtt min/avg/max/mdev = 0.732/1.480/2.858/0.975 ms"
+    },
+    {
+      "test_id": "CA-14",
+      "source": "h3 (faculty)",
+      "destination": "h5 Academic server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h3$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.5 8000 --timeout 2 -> RESULT=OK ACADEMIC TCP OK | server h5 log: received TCP 10.0.0.3:35808"
+    },
+    {
+      "test_id": "CA-15",
+      "source": "h3 (faculty)",
+      "destination": "h5 Academic server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h3$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.5 9000 --timeout 2 -> RESULT=OK ACADEMIC UDP OK | server h5 log: received UDP 10.0.0.3:48274"
+    },
+    {
+      "test_id": "CA-16",
+      "source": "h3 (faculty)",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 3/3 received. 0.376 ms | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 409ms | rtt min/avg/max/mdev = 0.376/1.255/2.822/1.110 ms"
+    },
+    {
+      "test_id": "CA-17",
+      "source": "h3 (faculty)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h3$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=OK ADMIN TCP OK | server h6 log: received TCP 10.0.0.3:51832"
+    },
+    {
+      "test_id": "CA-18",
+      "source": "h3 (faculty)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h3$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=OK ADMIN UDP OK | server h6 log: received UDP 10.0.0.3:46087"
+    },
+    {
+      "test_id": "CA-19",
+      "source": "h4 (faculty)",
+      "destination": "h5 Academic server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.5: 3/3 received. 0.288 ms | --- 10.0.0.5 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 408ms | rtt min/avg/max/mdev = 0.288/1.256/3.192/1.368 ms"
+    },
+    {
+      "test_id": "CA-20",
+      "source": "h4 (faculty)",
+      "destination": "h5 Academic server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h4$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.5 8000 --timeout 2 -> RESULT=OK ACADEMIC TCP OK | server h5 log: received TCP 10.0.0.4:45806"
+    },
+    {
+      "test_id": "CA-21",
+      "source": "h4 (faculty)",
+      "destination": "h5 Academic server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h4$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.5 9000 --timeout 2 -> RESULT=OK ACADEMIC UDP OK | server h5 log: received UDP 10.0.0.4:46162"
+    },
+    {
+      "test_id": "CA-22",
+      "source": "h4 (faculty)",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 3/3 received. 0.351 ms | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 414ms | rtt min/avg/max/mdev = 0.351/1.036/2.148/0.793 ms"
+    },
+    {
+      "test_id": "CA-23",
+      "source": "h4 (faculty)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h4$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=OK ADMIN TCP OK | server h6 log: received TCP 10.0.0.4:59202"
+    },
+    {
+      "test_id": "CA-24",
+      "source": "h4 (faculty)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "h4$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=OK ADMIN UDP OK | server h6 log: received UDP 10.0.0.4:47749"
+    },
+    {
+      "test_id": "CA-B01",
+      "source": "h1 (student, static ARP)",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 0/3 received. PING 10.0.0.6 (10.0.0.6) 56(84) bytes of data. | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 0 received, 100% packet loss, time 410ms"
+    },
+    {
+      "test_id": "CA-B02",
+      "source": "h1 (student, static ARP)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=TIMEOUT no TCP reply from 10.0.0.6:8000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-B03",
+      "source": "h1 (student, static ARP)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=TIMEOUT no UDP reply from 10.0.0.6:9000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-B04",
+      "source": "h1 (student, forged IP 10.0.0.3)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=TIMEOUT no TCP reply from 10.0.0.6:8000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-B05",
+      "source": "h1 (student, forged IP 10.0.0.3)",
+      "destination": "h6 Administrative server :9000",
+      "protocol": "UDP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py udp 10.0.0.6 9000 --timeout 2 -> RESULT=TIMEOUT no UDP reply from 10.0.0.6:9000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-B06",
+      "source": "h1 (student, forged MAC+IP of h3)",
+      "destination": "h6 Administrative server :8000",
+      "protocol": "TCP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "h1$ python3 /lab/campus-access-control/lab_client.py tcp 10.0.0.6 8000 --timeout 2 -> RESULT=TIMEOUT no TCP reply from 10.0.0.6:8000 within 2.0s | server h6 log: no packet from source"
+    },
+    {
+      "test_id": "CA-B07",
+      "source": "h6 (admin_server)",
+      "destination": "h1 student",
+      "protocol": "ICMP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.1: 0/3 received. PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data. | --- 10.0.0.1 ping statistics --- | 3 packets transmitted, 0 received, 100% packet loss, time 409ms"
+    },
+    {
+      "test_id": "CA-B08",
+      "source": "h6 (admin_server, static ARP)",
+      "destination": "h1 student",
+      "protocol": "ICMP",
+      "expected": "Blocked",
+      "actual": "Blocked",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.1: 0/3 received. PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data. | --- 10.0.0.1 ping statistics --- | 3 packets transmitted, 0 received, 100% packet loss, time 416ms"
+    },
+    {
+      "test_id": "CA-G01",
+      "source": "h1 (student) [same switch s1]",
+      "destination": "h2 student",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.2: 3/3 received. 0.685 ms | --- 10.0.0.2 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 409ms | rtt min/avg/max/mdev = 0.685/1.902/4.329/1.715 ms"
+    },
+    {
+      "test_id": "CA-G02",
+      "source": "h3 (faculty) [same switch s2]",
+      "destination": "h4 faculty",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.4: 3/3 received. 0.676 ms | --- 10.0.0.4 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 413ms | rtt min/avg/max/mdev = 0.638/1.846/4.226/1.682 ms"
+    },
+    {
+      "test_id": "CA-G03",
+      "source": "h1 (student) [s1-s3-s2]",
+      "destination": "h3 faculty",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.3: 3/3 received. 0.552 ms | --- 10.0.0.3 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 413ms | rtt min/avg/max/mdev = 0.552/1.818/4.285/1.744 ms"
+    },
+    {
+      "test_id": "CA-G04",
+      "source": "h2 (student) [s1-s3-s2]",
+      "destination": "h4 faculty",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.4: 3/3 received. 0.787 ms | --- 10.0.0.4 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 406ms | rtt min/avg/max/mdev = 0.431/1.339/2.800/1.043 ms"
+    },
+    {
+      "test_id": "CA-G05",
+      "source": "h5 (academic_server) [same switch s3]",
+      "destination": "h6 Administrative server",
+      "protocol": "ICMP",
+      "expected": "Allowed",
+      "actual": "Allowed",
+      "passed": true,
+      "evidence": "ping -c 3 10.0.0.6: 3/3 received. 0.544 ms | --- 10.0.0.6 ping statistics --- | 3 packets transmitted, 3 received, 0% packet loss, time 405ms | rtt min/avg/max/mdev = 0.405/1.908/4.775/2.028 ms"
+    },
+    {
+      "test_id": "CA-C01",
+      "source": "student/admin traffic",
+      "destination": "s1",
+      "protocol": "OF1.3",
+      "expected": "Hits",
+      "actual": "Hits",
+      "passed": true,
+      "evidence": "deny rules on s1 dropped 6 packets"
+    },
+    {
+      "test_id": "CA-C02",
+      "source": "student/admin traffic",
+      "destination": "s2",
+      "protocol": "OF1.3",
+      "expected": "No hits",
+      "actual": "No hits",
+      "passed": true,
+      "evidence": "deny rules on s2 dropped 0 packets"
+    },
+    {
+      "test_id": "CA-C03",
+      "source": "student/admin traffic",
+      "destination": "s3",
+      "protocol": "OF1.3",
+      "expected": "Hits",
+      "actual": "Hits",
+      "passed": true,
+      "evidence": "deny rules on s3 dropped 6 packets"
+    }
+  ]
+}
